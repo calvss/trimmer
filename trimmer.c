@@ -13,6 +13,7 @@ int main(int argc, char** argv[])
     char* buffer;
     char* command;
     char* dotLocation;
+    char* tempDebug;
     long index;
     long n;
     size_t fileNameLength;
@@ -30,6 +31,7 @@ int main(int argc, char** argv[])
             fileName = malloc(sizeof(char) * (fileNameLength + 1));
             newName = malloc(sizeof(char) * (fileNameLength + 1));
             command = calloc(5 + fileNameLength + fileNameLength, sizeof(char));
+            tempDebug = calloc(10 + fileNameLength + fileNameLength, sizeof(char));
 
             fileName = argv[1];
             index = strtol(argv[2], NULL, 10);
@@ -54,10 +56,17 @@ int main(int argc, char** argv[])
                 memcpy(newName + index, fileName + index + n, fileNameLength - n);
                 newName[fileNameLength - n] = '\0';
 
-                strcat(command, "ren ");
+                strcat(command, "ren \"");
                 strcat(command, fileName);
-                strcat(command, " ");
+                strcat(command, "\" \"");
                 strcat(command, newName);
+                strcat(command, "\"");
+
+                strcat(tempDebug, "echo \"");
+                strcat(tempDebug, command);
+                strcat(tempDebug, "\"");
+
+                system(tempDebug);
 
                 if(!system(command))
                 {
@@ -68,6 +77,7 @@ int main(int argc, char** argv[])
             free(fileName);
             free(newName);
             free(command);
+            free(tempDebug);
         }
     }
     else
