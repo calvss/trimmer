@@ -13,7 +13,6 @@ int main(int argc, char** argv[])
     char* buffer;
     char* command;
     char* dotLocation;
-    char* tempDebug;
     long index;
     long n;
     size_t fileNameLength;
@@ -31,7 +30,6 @@ int main(int argc, char** argv[])
             fileName = malloc(sizeof(char) * (fileNameLength + 1));
             newName = malloc(sizeof(char) * (fileNameLength + 1));
             command = calloc(5 + fileNameLength + fileNameLength, sizeof(char));
-            tempDebug = calloc(10 + fileNameLength + fileNameLength, sizeof(char));
 
             fileName = argv[1];
             index = strtol(argv[2], NULL, 10);
@@ -62,12 +60,6 @@ int main(int argc, char** argv[])
                 strcat(command, newName);
                 strcat(command, "\"");
 
-                strcat(tempDebug, "echo \"");
-                strcat(tempDebug, command);
-                strcat(tempDebug, "\"");
-
-                system(tempDebug);
-
                 if(!system(command))
                 {
                     printf("renamed to %s\n", newName);
@@ -77,7 +69,6 @@ int main(int argc, char** argv[])
             free(fileName);
             free(newName);
             free(command);
-            free(tempDebug);
         }
     }
     else
